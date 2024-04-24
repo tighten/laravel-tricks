@@ -1,7 +1,12 @@
 <?php
 
-it('returns a successful response', function () {
-    $response = $this->get('/');
+use App\Models\Trick;
 
-    $response->assertStatus(200);
+it('can view tricks on homepage', function () {
+    Trick::factory()->create(['name' => 'How to make a trick']);
+
+    $this->withoutExceptionHandling()
+        ->get('/')
+        ->assertStatus(200)
+        ->assertSee('How to make a trick');
 });
