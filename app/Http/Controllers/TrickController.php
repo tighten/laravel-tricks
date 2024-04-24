@@ -16,7 +16,7 @@ class TrickController extends Controller
 
     public function create()
     {
-        //
+        return view('tricks.create');
     }
 
     public function store(Request $request)
