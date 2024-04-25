@@ -49,7 +49,17 @@ class TrickController extends Controller
 
     public function update(Request $request, Trick $trick)
     {
-        //
+        Gate::authorize('update', $trick);
+        
+        $data = $request->validate([
+            'name' => 'required|min:4|unique:tricks,name',
+            'description' => 'required|min:10',
+            'code' => 'required',
+        ]);
+
+        $trick->update($data);
+
+        return redirect()->route('dashboard');
     }
 
     public function destroy(Trick $trick)

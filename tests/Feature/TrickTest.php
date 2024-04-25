@@ -85,5 +85,67 @@ it('cannot view edit trick page if not yours', function () {
 });
 
 // Update
+it('can update trick', function () {
+    $user = User::factory()->create();
+    $trick = Trick::factory()->for($user)->create([
+        'name' => 'How to make a Trick',
+        'description' => 'Add a description',
+        'code' => 'Add a bit of code',
+    ]);
+
+    $this->actingAs($user)
+        ->put(route('tricks.update', $trick), [
+            'name' => 'How to make a new Trick',
+            'description' => 'Add a brief description',
+            'code' => 'Add a snippet of code',
+        ])
+        ->assertStatus(302);
+
+    tap($trick->fresh(), function ($trick) {
+        expect($trick->name)->toBe('How to make a new Trick');
+        expect($trick->slug)->toBe('how-to-make-a-new-trick');
+        expect($trick->description)->toBe('Add a brief description');
+        expect($trick->code)->toBe('Add a snippet of code');
+    });
+});
+
+it('cannot update invalid trick', function () {
+    $user = User::factory()->create();
+    $trick = Trick::factory()->for($user)->create([
+        'name' => 'How to make a Trick',
+        'slug' => 'how-to-make-a-trick',
+        'description' => 'Add a description',
+        'code' => 'Add a bit of code',
+    ]);
+
+    $this->actingAs($user)
+        ->put(route('tricks.update', $trick), [
+            'name' => 'how',
+            'description' => 'Add',
+            // 'code' => 'Add a bit of code',
+        ])
+        ->assertStatus(302)
+        ->assertInvalid(['name', 'description', 'code']);
+
+    tap($trick->fresh(), function ($trick) {
+        expect($trick->name)->toBe('How to make a Trick');
+        expect($trick->slug)->toBe('how-to-make-a-trick');
+        expect($trick->description)->toBe('Add a description');
+        expect($trick->code)->toBe('Add a bit of code');
+    });
+});
+
+it('cannot view update trick page if not yours', function () {
+    $user = User::factory()->create();
+    $trick = Trick::factory()->for($user)->create();
+
+    $this->actingAs(User::factory()->create())
+        ->put(route('tricks.update', $trick), [
+            'name' => 'How to make a new Trick',
+            'description' => 'Add a brief description',
+            'code' => 'Add a snippet of code',
+        ])
+        ->assertStatus(403);
+});
 
 // Delete
