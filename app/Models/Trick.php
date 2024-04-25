@@ -20,7 +20,7 @@ class Trick extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')

@@ -43,14 +43,14 @@ class TrickController extends Controller
         Gate::authorize('update', $trick);
 
         return view('tricks.edit', [
-            'trick' => $trick
+            'trick' => $trick,
         ]);
     }
 
     public function update(Request $request, Trick $trick)
     {
         Gate::authorize('update', $trick);
-        
+
         $data = $request->validate([
             'name' => 'required|min:4|unique:tricks,name',
             'description' => 'required|min:10',
