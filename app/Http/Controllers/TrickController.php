@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Trick;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TrickController extends Controller
 {
@@ -31,7 +32,11 @@ class TrickController extends Controller
 
     public function edit(Trick $trick)
     {
-        //
+        Gate::authorize('update', $trick);
+
+        return view('tricks.edit', [
+            'trick' => $trick
+        ]);
     }
 
     public function update(Request $request, Trick $trick)
