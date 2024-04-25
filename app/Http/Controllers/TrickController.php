@@ -35,7 +35,9 @@ class TrickController extends Controller
 
     public function show(Trick $trick)
     {
-        //
+        return view('tricks.show', [
+            'trick' => $trick,
+        ]);
     }
 
     public function edit(Trick $trick)

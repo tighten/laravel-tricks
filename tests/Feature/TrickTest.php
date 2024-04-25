@@ -55,6 +55,13 @@ test('cannot store invalid trick', function () {
 });
 
 // Show
+test('can view trick', function () {
+    $trick = Trick::factory()->create(['name' => 'How to make a trick']);
+
+    $this->get(route('tricks.show', $trick))
+        ->assertStatus(200)
+        ->assertSee('How to make a trick');
+});
 
 // Edit
 test('can view edit trick page', function () {
