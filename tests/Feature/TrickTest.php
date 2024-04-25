@@ -4,7 +4,7 @@ use App\Models\Trick;
 use App\Models\User;
 
 // Index
-it('can view tricks on homepage', function () {
+test('can view tricks on homepage', function () {
     Trick::factory()->create(['name' => 'How to make a trick']);
 
     $this->get(route('tricks.index'))
@@ -13,20 +13,20 @@ it('can view tricks on homepage', function () {
 });
 
 // Create
-it('can view create trick page', function () {
+test('can view create trick page', function () {
     $this->actingAs(User::factory()->create())
         ->get(route('tricks.create'))
         ->assertStatus(200)
         ->assertSee('Create Trick');
 });
 
-it('cannot view create trick page as guest', function () {
+test('cannot view create trick page as guest', function () {
     $this->get(route('tricks.create'))
         ->assertStatus(302);
 });
 
 // Store
-it('can store trick', function () {
+test('can store trick', function () {
     $this->actingAs(User::factory()->create())
         ->post(route('tricks.store'), [
             'name' => 'How to make a Trick',
@@ -43,7 +43,7 @@ it('can store trick', function () {
     ]);
 });
 
-it('cannot store invalid trick', function () {
+test('cannot store invalid trick', function () {
     $this->actingAs(User::factory()->create())
         ->post(route('tricks.store'), [
             'name' => 'how',
@@ -57,7 +57,7 @@ it('cannot store invalid trick', function () {
 // Show
 
 // Edit
-it('can view edit trick page', function () {
+test('can view edit trick page', function () {
     $user = User::factory()->create();
     $trick = Trick::factory()->for($user)->create();
 
@@ -67,7 +67,7 @@ it('can view edit trick page', function () {
         ->assertSee('Edit Trick');
 });
 
-it('cannot view edit trick page as guest', function () {
+test('cannot view edit trick page as guest', function () {
     $user = User::factory()->create();
     $trick = Trick::factory()->for($user)->create();
 
@@ -75,7 +75,7 @@ it('cannot view edit trick page as guest', function () {
         ->assertStatus(302);
 });
 
-it('cannot view edit trick page if not yours', function () {
+test('cannot view edit trick page if not yours', function () {
     $user = User::factory()->create();
     $trick = Trick::factory()->for($user)->create();
 
@@ -85,7 +85,7 @@ it('cannot view edit trick page if not yours', function () {
 });
 
 // Update
-it('can update trick', function () {
+test('can update trick', function () {
     $user = User::factory()->create();
     $trick = Trick::factory()->for($user)->create([
         'name' => 'How to make a Trick',
@@ -109,7 +109,7 @@ it('can update trick', function () {
     });
 });
 
-it('cannot update invalid trick', function () {
+test('cannot update invalid trick', function () {
     $user = User::factory()->create();
     $trick = Trick::factory()->for($user)->create([
         'name' => 'How to make a Trick',
@@ -135,7 +135,7 @@ it('cannot update invalid trick', function () {
     });
 });
 
-it('cannot update trick page if not yours', function () {
+test('cannot update trick page if not yours', function () {
     $user = User::factory()->create();
     $trick = Trick::factory()->for($user)->create();
 
@@ -149,7 +149,7 @@ it('cannot update trick page if not yours', function () {
 });
 
 // Delete
-it('can delete trick', function () {
+test('can delete trick', function () {
     $user = User::factory()->create();
     $trick = Trick::factory()->for($user)->create([
         'name' => 'How to make a Trick',
@@ -168,7 +168,7 @@ it('can delete trick', function () {
     ]);
 });
 
-it('cannot delete trick page if not yours', function () {
+test('cannot delete trick page if not yours', function () {
     $user = User::factory()->create();
     $trick = Trick::factory()->for($user)->create();
 
