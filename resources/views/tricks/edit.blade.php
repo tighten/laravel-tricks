@@ -5,9 +5,31 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <x-container>
+        <x-form method="PUT" action="{{ route('tricks.update', $trick) }}">
+            <div>
+                <x-input-label for="name" :value="__('Name')" />
+                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name') ?? $trick->name" required autofocus />
+                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            </div>
 
-        </div>
-    </div>
+            <div>
+                <x-input-label for="description" :value="__('Description')" />
+                <x-form.textarea id="description" class="block mt-1 w-full" name="description" :value="old('description') ?? $trick->description" required />
+                <x-input-error :messages="$errors->get('description')" class="mt-2" />
+            </div>
+
+            <div>
+                <x-input-label for="code" :value="__('Code')" />
+                <x-form.textarea id="code" class="block mt-1 w-full" name="code" :value="old('code') ?? $trick->code" required />
+                <x-input-error :messages="$errors->get('code')" class="mt-2" />
+            </div>
+
+            <div class="flex items-center justify-end mt-4">
+                <x-primary-button class="ms-3">
+                    {{ __('Save Changes') }}
+                </x-primary-button>
+            </div>
+        </x-form>
+    </x-container>
 </x-app-layout>
