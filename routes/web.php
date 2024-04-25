@@ -12,6 +12,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/tricks/create', [TrickController::class, 'create'])->name('tricks.create');
+    Route::post('/tricks', [TrickController::class, 'store'])->name('tricks.store');
     Route::get('/tricks/{trick}/edit', [TrickController::class, 'edit'])->name('tricks.edit');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

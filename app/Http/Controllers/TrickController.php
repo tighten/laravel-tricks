@@ -22,7 +22,15 @@ class TrickController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|min:4|unique:tricks,name',
+            'description' => 'required|min:10',
+            'code' => 'required',
+        ]);
+
+        auth()->user()->tricks()->create($data);
+
+        return redirect()->route('dashboard');
     }
 
     public function show(Trick $trick)
