@@ -11,4 +11,9 @@ class TrickPolicy
     {
         return $user->id === $trick->id;
     }
+
+    public function delete(User $user, Trick $trick): bool
+    {
+        return $user->id === $trick->id;
+    }
 }

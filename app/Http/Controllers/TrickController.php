@@ -64,6 +64,10 @@ class TrickController extends Controller
 
     public function destroy(Trick $trick)
     {
-        //
+        Gate::authorize('delete', $trick);
+
+        $trick->delete();
+
+        return redirect()->route('dashboard');
     }
 }

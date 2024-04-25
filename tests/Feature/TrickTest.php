@@ -135,7 +135,7 @@ it('cannot update invalid trick', function () {
     });
 });
 
-it('cannot view update trick page if not yours', function () {
+it('cannot update trick page if not yours', function () {
     $user = User::factory()->create();
     $trick = Trick::factory()->for($user)->create();
 
@@ -149,3 +149,30 @@ it('cannot view update trick page if not yours', function () {
 });
 
 // Delete
+it('can delete trick', function () {
+    $user = User::factory()->create();
+    $trick = Trick::factory()->for($user)->create([
+        'name' => 'How to make a Trick',
+        'description' => 'Add a description',
+        'code' => 'Add a bit of code',
+    ]);
+
+    $this->actingAs($user)
+        ->delete(route('tricks.destroy', $trick))
+        ->assertStatus(302);
+
+    $this->assertDatabaseMissing('tricks', [
+        'name' => 'How to make a Trick',
+        'description' => 'Add a description',
+        'code' => 'Add a bit of code',
+    ]);
+});
+
+it('cannot delete trick page if not yours', function () {
+    $user = User::factory()->create();
+    $trick = Trick::factory()->for($user)->create();
+
+    $this->actingAs(User::factory()->create())
+        ->delete(route('tricks.destroy', $trick))
+        ->assertStatus(403);
+});
