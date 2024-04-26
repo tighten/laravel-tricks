@@ -30,7 +30,7 @@ class TrickController extends Controller
 
         auth()->user()->tricks()->create($data);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('tricks.index');
     }
 
     public function show(Trick $trick)
@@ -61,7 +61,7 @@ class TrickController extends Controller
 
         $trick->update($data);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('tricks.index');
     }
 
     public function destroy(Trick $trick)
@@ -70,6 +70,6 @@ class TrickController extends Controller
 
         $trick->delete();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('tricks.index');
     }
 }

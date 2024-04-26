@@ -6,10 +6,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [TrickController::class, 'index'])->name('tricks.index');
 
-Route::get('dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('tricks/create', [TrickController::class, 'create'])->name('tricks.create');
     Route::post('tricks', [TrickController::class, 'store'])->name('tricks.store');
