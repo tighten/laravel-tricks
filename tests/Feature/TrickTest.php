@@ -32,15 +32,17 @@ test('can store trick', function () {
             'name' => 'How to make a Trick',
             'description' => 'Add a description',
             'code' => 'Add a bit of code',
+            'tags' => 'general,hello-world'
         ])
         ->assertStatus(302);
 
-    $this->assertDatabaseHas('tricks', [
-        'name' => 'How to make a Trick',
-        'slug' => 'how-to-make-a-trick',
-        'description' => 'Add a description',
-        'code' => 'Add a bit of code',
-    ]);
+    tap(Trick::firstWhere('name', 'How to make a Trick'), function ($trick) {
+        expect($trick)->not->toBeNull();
+        expect($trick->slug)->toBe('how-to-make-a-trick');
+        expect($trick->description)->toBe('Add a description');
+        expect($trick->code)->toBe('Add a bit of code');
+        expect($trick->tags)->toHaveCount(2);
+    });
 });
 
 test('cannot store invalid trick', function () {
@@ -105,6 +107,7 @@ test('can update trick', function () {
             'name' => 'How to make a new Trick',
             'description' => 'Add a brief description',
             'code' => 'Add a snippet of code',
+            'tags' => 'hello-world,general',
         ])
         ->assertStatus(302);
 
@@ -113,6 +116,7 @@ test('can update trick', function () {
         expect($trick->slug)->toBe('how-to-make-a-new-trick');
         expect($trick->description)->toBe('Add a brief description');
         expect($trick->code)->toBe('Add a snippet of code');
+        expect($trick->tags)->toHaveCount(2);
     });
 });
 
@@ -123,6 +127,7 @@ test('cannot update invalid trick', function () {
         'slug' => 'how-to-make-a-trick',
         'description' => 'Add a description',
         'code' => 'Add a bit of code',
+        'tags' => ['hello-world', 'general'],
     ]);
 
     $this->actingAs($user)
@@ -130,9 +135,10 @@ test('cannot update invalid trick', function () {
             'name' => 'how',
             'description' => 'Add',
             // 'code' => 'Add a bit of code',
+            // 'tags' => 'hello-world,general',
         ])
         ->assertStatus(302)
-        ->assertInvalid(['name', 'description', 'code']);
+        ->assertInvalid(['name', 'description', 'code', 'tags']);
 
     tap($trick->fresh(), function ($trick) {
         expect($trick->name)->toBe('How to make a Trick');
@@ -151,6 +157,7 @@ test('cannot update trick page if not yours', function () {
             'name' => 'How to make a new Trick',
             'description' => 'Add a brief description',
             'code' => 'Add a snippet of code',
+            'tags' => 'hello-world,general',
         ])
         ->assertStatus(403);
 });

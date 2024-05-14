@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TrickRequest;
 use App\Models\Trick;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -23,15 +24,11 @@ class TrickController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(TrickRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'required|min:4|unique:tricks,name',
-            'description' => 'required|min:10',
-            'code' => 'required',
-        ]);
-
-        auth()->user()->tricks()->create($data);
+        auth()->user()
+            ->tricks()
+            ->create($request->validated());
 
         return redirect()->route('tricks.index');
     }
@@ -52,17 +49,9 @@ class TrickController extends Controller
         ]);
     }
 
-    public function update(Request $request, Trick $trick)
+    public function update(TrickRequest $request, Trick $trick)
     {
-        Gate::authorize('update', $trick);
-
-        $data = $request->validate([
-            'name' => 'required|min:4|unique:tricks,name',
-            'description' => 'required|min:10',
-            'code' => 'required',
-        ]);
-
-        $trick->update($data);
+        $trick->update($request->validated());
 
         return redirect()->route('tricks.index');
     }

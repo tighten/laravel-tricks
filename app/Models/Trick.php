@@ -15,7 +15,7 @@ class Trick extends Model
     use HasSlug;
     use HasTags;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     public function user(): BelongsTo
     {
