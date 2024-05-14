@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Trick;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Spatie\Tags\Tag;
 
 class TrickController extends Controller
 {
@@ -17,7 +18,9 @@ class TrickController extends Controller
 
     public function create()
     {
-        return view('tricks.create');
+        return view('tricks.create', [
+            'tagOptions' => Tag::all()->map(fn ($tag) => ['value' => $tag->id, 'label' => $tag->name])->toArray(),
+        ]);
     }
 
     public function store(Request $request)
