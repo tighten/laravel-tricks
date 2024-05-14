@@ -20,7 +20,7 @@ class TrickController extends Controller
     public function create()
     {
         return view('tricks.create', [
-            'tagOptions' => Tag::all()->map(fn ($tag) => ['value' => $tag->id, 'label' => $tag->name])->toArray(),
+            'tagOptions' => Tag::all()->map(fn ($tag) => ['value' => $tag->name, 'label' => $tag->name])->toArray(),
         ]);
     }
 

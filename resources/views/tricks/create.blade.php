@@ -27,7 +27,7 @@
 
             <div>
                 <x-form.label for="tags" :value="__('Tags')" required />
-                <x-form.tags id="tags" class="block mt-1 w-full" name="tags" :options="$tagOptions" :value="old('tags')" />
+                <x-form.tags id="tags" class="block mt-1 w-full" name="tags[]" :options="$tagOptions" :value="old('tags')" />
                 <x-form.error :messages="$errors->get('tags')" class="mt-2" />
             </div>
 
