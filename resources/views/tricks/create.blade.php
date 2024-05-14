@@ -8,26 +8,26 @@
     <x-container>
         <x-form method="POST" action="{{ route('tricks.store') }}">
             <div>
-                <x-form.label for="name" :value="__('Name')" />
-                <x-form.input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                <x-form.label for="name" :value="__('Name')" required/>
+                <x-form.input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" autofocus />
                 <x-form.error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
             <div>
-                <x-form.label for="description" :value="__('Description')" />
-                <x-form.textarea id="description" class="block mt-1 w-full" name="description" :value="old('description')" required />
+                <x-form.label for="description" :value="__('Description')" required/>
+                <x-form.textarea id="description" class="block mt-1 w-full" name="description" :value="old('description')" />
                 <x-form.error :messages="$errors->get('description')" class="mt-2" />
             </div>
 
             <div>
-                <x-form.label for="code" :value="__('Code')" />
-                <x-form.textarea id="code" class="block mt-1 w-full" name="code" :value="old('code')" required />
+                <x-form.label for="code" :value="__('Code')" required />
+                <x-form.textarea id="code" class="block mt-1 w-full" name="code" :value="old('code')" />
                 <x-form.error :messages="$errors->get('code')" class="mt-2" />
             </div>
 
             <div>
-                <x-form.label for="tags" :value="__('Tags')" />
-                <x-form.tags id="tags" class="block mt-1 w-full" name="tags" :options="$tagOptions" :value="old('tags')" required />
+                <x-form.label for="tags" :value="__('Tags')" required />
+                <x-form.tags id="tags" class="block mt-1 w-full" name="tags" :options="$tagOptions" :value="old('tags')" />
                 <x-form.error :messages="$errors->get('tags')" class="mt-2" />
             </div>
 
