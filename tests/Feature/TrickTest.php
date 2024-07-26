@@ -32,7 +32,7 @@ test('can store trick', function () {
             'name' => 'How to make a Trick',
             'description' => 'Add a description',
             'code' => 'Add a bit of code',
-            'tags' => 'general,hello-world'
+            'tags' => 'general,hello-world',
         ])
         ->assertStatus(302);
 
