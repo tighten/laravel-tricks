@@ -7,4 +7,6 @@
 - Posts by tag page
 - Code editor
 - Tag component
+
+## Done
 - Update login/register to use form components
